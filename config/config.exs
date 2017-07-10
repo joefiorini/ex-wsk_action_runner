@@ -14,6 +14,8 @@ config :webmachine,
     {WskActionRunner.Application.ErrorHandler, ["log"]}
   ]
 
+config :mix_docker, image: "joefiorini/moneyalarms-elixir"
+
 # You can configure for your application as:
 #
 #     config :wsk_action_runner, key: :value

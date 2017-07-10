@@ -4,15 +4,9 @@ defmodule WskActionRunner.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    Application.put_env(:webmachine, :log_handlers, [
-          webmachine_access_log_handler: ["log"],
-          webmachine_error_log_handler: ["log"]
-        ])
-
     # Some configuration that Webmachine needs
-    web_config = [ip: {127, 0, 0, 1},
+    web_config = [ip: {0, 0, 0, 0},
                   port: 8080,
-                  log_dir: "log",
                   dispatch: [
                     {['init'], WskActionRunner.Resources.Init, []},
                     {['run'], WskActionRunner.Resources.Run, []}

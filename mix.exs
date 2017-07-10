@@ -15,7 +15,7 @@ defmodule WskActionRunner.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [applications: [:logger, :webmachine],
+    [applications: [:logger, :webmachine, :absinthe, :poison],
      mod: {WskActionRunner.Application, []}]
   end
 
@@ -33,6 +33,9 @@ defmodule WskActionRunner.Mixfile do
       git: "https://github.com/webmachine/webmachine.git",
       branch: "master"},
      {:absinthe, "~> 1.3.2"},
-     {:poison, "~> 3.1"}]
+     {:poison, "~> 3.1"},
+     {:distillery, "~> 1.4", runtime: false},
+     {:mix_docker, "~> 0.5.0"}
+    ]
   end
 end

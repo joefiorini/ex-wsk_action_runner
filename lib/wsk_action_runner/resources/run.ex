@@ -17,15 +17,13 @@ defmodule WskActionRunner.Resources.Run do
     # parsing/dispatching
     from_json(req_data, state)
     |> case do
-        {{:struct, [{"env", {:struct, env}}, {"data", {:struct, _}}]}, _r, _s} ->
+        {%{"env" => env, "value" => _value}, _r, _s} ->
           WskActionRunner.EnvVars.set_from_payload(env)
             {true, req_data, state}
-        {{:struct, [{"data", {:struct, _}}]}, _r, _s} ->
+        {%{"value" => _value}, _r, _s} ->
             {true, req_data, state}
-          {{:struct, []}, _r, _s} ->
-            {{:halt, {400, 'Missing data with graphql query'}}, req_data, state}
         _ ->
-            {{:halt, {400, 'Unknown error'}}, req_data, state}
+           {{:halt, {400, 'Missing value with graphql query'}}, req_data, state}
       end
     |> Utils.bind_result(&to_json/2)
     |> Utils.bind_result(&set_response/1)
@@ -54,7 +52,7 @@ defmodule WskActionRunner.Resources.Run do
 
   def process_graphql_request({body, req_data, state}) do
     try do
-      {:struct, [{"data", {:struct, [{"query", query}]}}]} = body
+      %{"value" => %{"query" => query}} = body
       query
       |> Absinthe.run(WskActionRunner.Schema)
       |> extract_graphql_response()
@@ -70,8 +68,10 @@ defmodule WskActionRunner.Resources.Run do
   def from_json(req_data, state) do
     body =
     :wrq.req_body(req_data)
-    |> :mochijson2.decode()
+    |> Poison.Parser.parse!
 
+    IO.puts "body:"
+    IO.inspect body
     {body, req_data, state}
   end
 end

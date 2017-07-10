@@ -1,12 +1,12 @@
 defmodule WskActionRunner.Application.ErrorHandler do
   require Logger
 
-  def init([baseDir]) do
-    file_name = Path.join(baseDir, "wm_error.log")
+  def init([_baseDir]) do
+    # file_name = Path.join(baseDir, "wm_error.log")
     {:ok, []}
   end
 
-  def handle_event({:log_error, code, req_data, reason}, state) do
+  def handle_event({:log_error, code, _req_data, reason}, state) do
     Logger.error("Error: Webmachine Server is returning #{Integer.to_string(code)}")
     Logger.error(inspect(reason, label: "Reason:"))
     Logger.error("State: #{inspect(state)}")
