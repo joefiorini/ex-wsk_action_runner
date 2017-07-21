@@ -15,7 +15,7 @@ defmodule WskActionRunner.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [applications: [:logger, :webmachine, :absinthe, :poison],
+    [applications: [:logger, :webmachine, :absinthe, :poison, :confex, :couchdb_connector],
      mod: {WskActionRunner.Application, []}]
   end
 
@@ -35,7 +35,11 @@ defmodule WskActionRunner.Mixfile do
      {:absinthe, "~> 1.3.2"},
      {:poison, "~> 3.1"},
      {:distillery, "~> 1.4", runtime: false},
-     {:mix_docker, "~> 0.5.0"}
+     {:mix_docker, "~> 0.5.0"},
+     {:hackney, "~> 1.8.6"},
+     {:jsx, "~> 2.8"},
+     {:confex, "~> 3.2.2"},
+     {:couchdb_connector, "~> 0.5.0"}
     ]
   end
 end

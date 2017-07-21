@@ -1,13 +1,24 @@
 defmodule WskActionRunner.Resources.Run do
   require Logger
 
-  def init(_), do: {{:trace, "/tmp"}, {nil, []}}
+  def init([args]), do: {{:trace, "/tmp"}, args}
 
   def ping(req_data, state), do: {:pong, req_data, state}
 
   def allowed_methods(req_data, state) do
     {[:POST], req_data, state}
   end
+
+  # TODO: Impelement this later
+  #
+  # def is_authorized(req_data, state) do
+  #   from_json(req_data, state)
+  #   |> Utils.bind_result(&body_is_public_action/1)
+  #   |> case do
+  #        true -> {true, req_data, state}
+  #        false -> {{:halt, 401}, req_data, state}
+  #      end
+  # end
 
   def process_post(req_data, state) do
     # TODO: Parse this with mochiweb.json, then
@@ -25,6 +36,7 @@ defmodule WskActionRunner.Resources.Run do
         _ ->
            {{:halt, {400, 'Missing value with graphql query'}}, req_data, state}
       end
+
     |> Utils.bind_result(&to_json/2)
     |> Utils.bind_result(&set_response/1)
   end
@@ -50,11 +62,12 @@ defmodule WskActionRunner.Resources.Run do
     data
   end
 
-  def process_graphql_request({body, req_data, state}) do
+  def process_graphql_request({body, req_data, %{db_config: db_config} = state}) do
+    IO.inspect(db_config, label: "db_config")
     try do
       %{"value" => %{"query" => query}} = body
       query
-      |> Absinthe.run(WskActionRunner.Schema)
+      |> Absinthe.run(WskActionRunner.Schema, context: %{db_config: db_config})
       |> extract_graphql_response()
       |> IO.inspect
       |> Poison.encode!()
@@ -65,10 +78,20 @@ defmodule WskActionRunner.Resources.Run do
     end
   end
 
+  def process_body(%{"value" => %{"query" => query} = value}) do
+    case value do
+      %{"env" => env} ->
+        WskActionRunner.EnvVars.set_from_payload(env)
+    end
+
+
+  end
+
   def from_json(req_data, state) do
     body =
     :wrq.req_body(req_data)
     |> Poison.Parser.parse!
+    |> process_body()
 
     IO.puts "body:"
     IO.inspect body

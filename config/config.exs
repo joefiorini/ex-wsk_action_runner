@@ -16,6 +16,17 @@ config :webmachine,
 
 config :mix_docker, image: "joefiorini/moneyalarms-elixir"
 
+config :wsk_action_runner,
+  couchdb: [
+    username:  {:system, "COUCHDB_USERNAME"},
+    password:  {:system, "COUCHDB_PASSWORD"},
+    host:      {:system, "COUCHDB_HOST"},
+    port:      {:system, :integer, "COUCHDB_PORT"},
+    url:       {:system, "COUCHDB_URL"},
+    database:  {:system, "COUCHDB_DATABASE", "testdb"}
+  ]
+
+
 # You can configure for your application as:
 #
 #     config :wsk_action_runner, key: :value
