@@ -14,7 +14,7 @@ config :webmachine,
     {WskActionRunner.Application.ErrorHandler, ["log"]}
   ]
 
-config :mix_docker, image: "joefiorini/moneyalarms-elixir"
+config :mix_docker, image: "joefiorini/reviewbot-elixir"
 
 config :wsk_action_runner,
   couchdb: [

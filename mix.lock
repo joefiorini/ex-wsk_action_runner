@@ -4,6 +4,7 @@
   "couchbeam": {:hex, :couchbeam, "1.4.2", "21b5718a8277668c480f3d08017fa9f0fe02d8294ef5e9d924c7d44edf0e585e", [:rebar3], [], "hexpm"},
   "couchdb_connector": {:hex, :couchdb_connector, "0.5.0", "39ff933dd64a79f9d57a09400bd3a8ca6b7b6279a8a84021414555e6001ab30a", [:mix], [{:httpoison, "~> 0.8 or ~> 0.9 or ~> 0.10", [hex: :httpoison, repo: "hexpm", optional: false]}, {:poison, "~> 1.5 or ~> 2.0 or ~> 3.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
   "distillery": {:hex, :distillery, "1.4.1", "546d851bf27ae8fe0727e10e4fc4e146ad836eecee138263a60431e688044ed3", [:mix], [], "hexpm"},
+  "exjsx": {:hex, :exjsx, "3.2.1", "1bc5bf1e4fd249104178f0885030bcd75a4526f4d2a1e976f4b428d347614f0f", [:mix], [{:jsx, "~> 2.8.0", [hex: :jsx, repo: "hexpm", optional: false]}], "hexpm"},
   "fs": {:hex, :fs, "0.9.2", "ed17036c26c3f70ac49781ed9220a50c36775c6ca2cf8182d123b6566e49ec59", [:rebar], [], "hexpm"},
   "hackney": {:hex, :hackney, "1.8.6", "21a725db3569b3fb11a6af17d5c5f654052ce9624219f1317e8639183de4a423", [:rebar3], [{:certifi, "1.2.1", [hex: :certifi, repo: "hexpm", optional: false]}, {:idna, "5.0.2", [hex: :idna, repo: "hexpm", optional: false]}, {:metrics, "1.0.1", [hex: :metrics, repo: "hexpm", optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, repo: "hexpm", optional: false]}, {:ssl_verify_fun, "1.1.1", [hex: :ssl_verify_fun, repo: "hexpm", optional: false]}], "hexpm"},
   "httpoison": {:hex, :httpoison, "0.12.0", "8fc3d791c5afe6beb0093680c667dd4ce712a49d89c38c3fe1a43100dd76cf90", [:mix], [{:hackney, "~> 1.8.0", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm"},
@@ -14,6 +15,8 @@
   "mix_docker": {:hex, :mix_docker, "0.5.0", "c7ad34008c43d4a949d69721f39c4d2a2afc509c179926a683117ea8dff8af59", [:mix], [{:distillery, "~> 1.2", [hex: :distillery, repo: "hexpm", optional: false]}], "hexpm"},
   "mochiweb": {:hex, :mochiweb, "2.12.2", "80804ad342afa3d7f3524040d4eed66ce74b17a555de454ac85b07c479928e46", [:make, :rebar], [], "hexpm"},
   "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},
+  "slack": {:hex, :slack, "0.10.0", "97502a60fbb47bc1ddbb7b80a67296a1d9d9a5fd2fe5734c257e553b8223e830", [:mix], [{:exjsx, "~> 3.2.0", [hex: :exjsx, repo: "hexpm", optional: false]}, {:httpoison, "~> 0.11", [hex: :httpoison, repo: "hexpm", optional: false]}, {:websocket_client, "~> 1.1.0", [hex: :websocket_client, repo: "hexpm", optional: false]}], "hexpm"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.1", "28a4d65b7f59893bc2c7de786dec1e1555bd742d336043fe644ae956c3497fbe", [:make, :rebar], [], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.2.0", "dbbccf6781821b1c0701845eaf966c9b6d83d7c3bfc65ca2b78b88b8678bfa35", [:rebar3], [], "hexpm"},
-  "webmachine": {:git, "https://github.com/webmachine/webmachine.git", "4edbea20f05dde54cd83e562ec29ae4cc5669f76", [branch: "master"]}}
+  "webmachine": {:git, "https://github.com/webmachine/webmachine.git", "4edbea20f05dde54cd83e562ec29ae4cc5669f76", [branch: "master"]},
+  "websocket_client": {:hex, :websocket_client, "1.1.0", "c1ac9162a2286d3ca747417b1717090e762becba1f9f0bde359cb0318b066636", [:rebar3], [], "hexpm"}}

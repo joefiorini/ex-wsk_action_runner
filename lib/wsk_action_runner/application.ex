@@ -30,12 +30,13 @@ defmodule WskActionRunner.Application do
   end
 
   def get_db_config() do
-    case Confex.fetch_env(:wsk_action_runner, :couchdb) do
-      {:ok, config} ->
-        read_config(config)
-        |> create_or_touch_db()
-       _ = e -> e
-    end
+    # case Confex.fetch_env(:wsk_action_runner, :couchdb) do
+    #   {:ok, config} ->
+    #     read_config(config)
+    #     |> create_or_touch_db()
+    #    _ = e -> e
+    # end
+    {:ok, %{}}
   end
 
   def start(_type, _args) do

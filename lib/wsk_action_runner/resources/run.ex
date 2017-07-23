@@ -83,8 +83,9 @@ defmodule WskActionRunner.Resources.Run do
       %{"env" => env} ->
         WskActionRunner.EnvVars.set_from_payload(env)
     end
+  end
 
-
+  def process_body(%{"value" => %{"challenge" => challenge} = value}) do
   end
 
   def from_json(req_data, state) do

@@ -35,11 +35,10 @@ defmodule WskActionRunner.Mixfile do
      {:absinthe, "~> 1.3.2"},
      {:poison, "~> 3.1"},
      {:distillery, "~> 1.4", runtime: false},
-     {:mix_docker, "~> 0.5.0"},
-     {:hackney, "~> 1.8.6"},
-     {:jsx, "~> 2.8"},
+     {:mix_docker, "~> 0.5.0", runtime: false},
      {:confex, "~> 3.2.2"},
-     {:couchdb_connector, "~> 0.5.0"}
+     {:couchdb_connector, "~> 0.5.0"},
+     {:slack, "~> 0.10.0"}
     ]
   end
 end
