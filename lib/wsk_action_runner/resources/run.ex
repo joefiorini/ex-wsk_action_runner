@@ -55,8 +55,16 @@ defmodule WskActionRunner.Resources.Run do
   def to_json(req_data, state) do
     {true, req_data, state}
     |> Utils.bind_result(&from_json/2)
-    |> Utils.bind_result(&ProcessSlackEvent.run/1)
+    |> Utils.bind_result(&process_req_body/1)
     |> Utils.return_body(req_data, state)
+  end
+
+  def process_req_body({body, req_data, state}) do
+    case :wrq.get_req_header("X-GitHub-Event", req_data) do
+      :undefined -> ProcessSlackEvent.run(body)
+      _ -> ProcessGithubWebhook.run(body)
+    end
+    |> Poison.encode!
   end
 
   def extract_graphql_response({:ok, %{data: data}}) do
@@ -79,15 +87,19 @@ defmodule WskActionRunner.Resources.Run do
     end
   end
 
-  def process_body(%{"value" => %{"query" => query} = value}) do
-    case value do
-      %{"env" => env} ->
-        WskActionRunner.EnvVars.set_from_payload(env)
-    end
+  # def process_body(%{"value" => %{"query" => query} = value}) do
+  #   case value do
+  #     %{"env" => env} ->
+  #       WskActionRunner.EnvVars.set_from_payload(env)
+  #   end
+  # end
+
+  def process_body(%{"value" => value}) do
+    value
   end
 
-  def process_body(%{"value" => %{"type" => type} = value}) do
-    value
+  def process_body(body) do
+    process_body(%{"value" => body})
   end
 
   def from_json(req_data, state) do

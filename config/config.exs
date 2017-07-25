@@ -26,6 +26,7 @@ config :wsk_action_runner,
     database:  {:system, "COUCHDB_DATABASE", "testdb"}
   ]
 
+config :slack, api_token: {:system, "SLACK_BOT_API_TOKEN"}
 
 # You can configure for your application as:
 #
