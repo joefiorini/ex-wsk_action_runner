@@ -26,17 +26,16 @@ defmodule WskActionRunner.Resources.Run do
     # on the environment, get the args under the
     # "data" key and pass it off to absinthe for
     # parsing/dispatching
-    from_json(req_data, state)
-    |> case do
-        {%{"env" => env, "value" => _value}, _r, _s} ->
-          WskActionRunner.EnvVars.set_from_payload(env)
-            {true, req_data, state}
-        {%{"value" => _value}, _r, _s} ->
-            {true, req_data, state}
-        _ ->
-           {{:halt, {400, 'Missing value with graphql query'}}, req_data, state}
-      end
+    # from_json(req_data, state)
+    # |> case do
+    #     {%{"env" => env, "value" => _value}, _r, _s} ->
+    #       WskActionRunner.EnvVars.set_from_payload(env)
+    #         {true, req_data, state}
+    #     {%{"value" => _value}, _r, _s} ->
+    #         {true, req_data, state}
+    #   end
 
+    {true, req_data, state}
     |> Utils.bind_result(&to_json/2)
     |> Utils.bind_result(&set_response/1)
   end
@@ -46,6 +45,7 @@ defmodule WskActionRunner.Resources.Run do
     |> Utils.set_resp_body(body)
     |> Utils.set_response_code(200)
     |> Utils.return_req_data(state)
+    |> IO.inspect()
   end
 
   def content_types_provided(req_data, state) do
@@ -55,7 +55,8 @@ defmodule WskActionRunner.Resources.Run do
   def to_json(req_data, state) do
     {true, req_data, state}
     |> Utils.bind_result(&from_json/2)
-    |> Utils.bind_result(&process_graphql_request/1)
+    |> Utils.bind_result(&ProcessSlackEvent.run/1)
+    |> Utils.return_body(req_data, state)
   end
 
   def extract_graphql_response({:ok, %{data: data}}) do
@@ -85,7 +86,8 @@ defmodule WskActionRunner.Resources.Run do
     end
   end
 
-  def process_body(%{"value" => %{"challenge" => challenge} = value}) do
+  def process_body(%{"value" => %{"type" => type} = value}) do
+    value
   end
 
   def from_json(req_data, state) do
